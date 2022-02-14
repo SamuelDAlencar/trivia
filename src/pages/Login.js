@@ -1,23 +1,26 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
+import token from '../redux/actions';
 import requestToken from '../service/tokenApi';
 
-export default class Login extends Component {
+class Login extends Component {
   constructor() {
     super();
 
     this.state = {
       name: '',
       email: '',
-      token: '',
     };
 
     this.handleInput = this.handleInput.bind(this);
   }
 
-  handleButton = () => {
-    requestToken().then((data) => this.setState({
-      token: data.token,
-    }));
+  handleButton = (callback) => {
+    requestToken().then((data) => {
+      callback(data.token);
+      localStorage.setItem('token', data.token);
+    });
   }
 
   handleInput({ target }) {
@@ -30,6 +33,7 @@ export default class Login extends Component {
 
   render() {
     const { name, email } = this.state;
+    const { handleClick } = this.props;
     return (
       <main>
         <form>
@@ -55,7 +59,7 @@ export default class Login extends Component {
             type="button"
             data-testid="btn-play"
             disabled={ !name || !email }
-            onClick={ this.handleButton }
+            onClick={ () => this.handleButton(handleClick) }
           >
             Play
           </button>
@@ -64,3 +68,15 @@ export default class Login extends Component {
     );
   }
 }
+
+const mapDispatchToProps = (dispatch) => ({
+  handleClick(state) {
+    dispatch(token(state));
+  },
+});
+
+Login.propTypes = {
+  handleClick: PropTypes.func,
+}.isRequired;
+
+export default connect(null, mapDispatchToProps)(Login);

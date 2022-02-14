@@ -3,4 +3,4 @@ const token = (state) => ({
   token: state,
 });
 
-export defaul token;
+export default token;
