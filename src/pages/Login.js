@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import requestToken from '../service/tokenApi';
 
 export default class Login extends Component {
   constructor() {
@@ -7,9 +8,16 @@ export default class Login extends Component {
     this.state = {
       name: '',
       email: '',
+      token: '',
     };
 
     this.handleInput = this.handleInput.bind(this);
+  }
+
+  handleButton = () => {
+    requestToken().then((data) => this.setState({
+      token: data.token,
+    }));
   }
 
   handleInput({ target }) {
@@ -47,6 +55,7 @@ export default class Login extends Component {
             type="button"
             data-testid="btn-play"
             disabled={ !name || !email }
+            onClick={ this.handleButton }
           >
             Play
           </button>
