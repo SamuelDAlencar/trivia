@@ -24,6 +24,23 @@
   width: fit-content;
 }
 
+.form__label__input:focus {
+  border-color: rgb(114, 175, 89);
+  outline: none;
+}
+
+.form__label__input:-webkit-autofill {
+  transition: background-color , 5000s ease-in-out 0s;
+}
+
+.form__label__input:-webkit-autofill:focus {
+  transition: background-color , 5000s ease-in-out 0s;
+}
+
+.form__label__input:-webkit-autofill:active {
+  transition: background-color , 5000s ease-in-out 0s;
+}
+
 .form__button {
   font-size: 18px;
   padding: 8px 16px;
