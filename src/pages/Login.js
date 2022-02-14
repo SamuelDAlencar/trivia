@@ -31,7 +31,6 @@ export default class Login extends Component {
     return (
       <main>
         <form>
-          <div>
             <button
               type="button"
               data-testid="btn-settings"
@@ -39,7 +38,6 @@ export default class Login extends Component {
             >
               Settings
             </button>
-          </div>
           <label htmlFor="name">
             Name
             <input
