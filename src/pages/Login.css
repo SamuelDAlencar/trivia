@@ -1,0 +1,30 @@
+.form {
+  align-items: center;
+  border: 1px solid rgb(90, 90, 90);
+  border-radius: 5px;
+  display: flex;
+  flex-direction: column;
+  letter-spacing: 1px;
+  margin: 150px auto;
+  padding: 30px;
+  text-align: center;
+  width: 40%;
+}
+
+.form__label {
+  margin: 20px;
+}
+
+.form__label__input {
+  border: 0;
+  border-bottom: 1px solid rgb(90, 90, 90);
+  border-radius: 5px;
+  margin: 0 5px;
+  padding: 5px;
+  width: fit-content;
+}
+
+.form__button {
+  font-size: 18px;
+  padding: 8px 16px;
+}
