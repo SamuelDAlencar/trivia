@@ -30,6 +30,11 @@ class Login extends Component {
     history.push('/game');
   }
 
+  roteSettings = () => {
+    const { history } = this.props;
+    history.push('/settings');
+  }
+
   handleInput({ target }) {
     const { id, value } = target;
 
@@ -44,6 +49,13 @@ class Login extends Component {
     return (
       <main>
         <form>
+          <button
+            type="button"
+            data-testid="btn-settings"
+            onClick={ () => this.roteSettings() }
+          >
+            Settings
+          </button>
           <label htmlFor="name">
             Name
             <input
@@ -84,6 +96,7 @@ const mapDispatchToProps = (dispatch) => ({
 
 Login.propTypes = {
   handleClick: PropTypes.func,
+  push: PropTypes.func,
 }.isRequired;
 
 export default connect(null, mapDispatchToProps)(Login);
