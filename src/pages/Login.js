@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 
 export default class Login extends Component {
   constructor() {
@@ -10,6 +11,11 @@ export default class Login extends Component {
     };
 
     this.handleInput = this.handleInput.bind(this);
+  }
+
+  roteSettings = () => {
+    const { history } = this.props;
+    history.push('/settings');
   }
 
   handleInput({ target }) {
@@ -25,6 +31,15 @@ export default class Login extends Component {
     return (
       <main>
         <form>
+          <div>
+            <button
+              type="button"
+              data-testid="btn-settings"
+              onClick={ () => this.roteSettings() }
+            >
+              Settings
+            </button>
+          </div>
           <label htmlFor="name">
             Name
             <input
@@ -55,3 +70,7 @@ export default class Login extends Component {
     );
   }
 }
+
+Login.propTypes = {
+  push: PropTypes.func,
+}.isRequired;
