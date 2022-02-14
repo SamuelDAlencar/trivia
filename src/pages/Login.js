@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import './Login.css';
+import PropTypes from 'prop-types';
 
 export default class Login extends Component {
   constructor() {
@@ -13,6 +14,11 @@ export default class Login extends Component {
     this.handleInput = this.handleInput.bind(this);
   }
 
+  roteSettings = () => {
+    const { history } = this.props;
+    history.push('/settings');
+  }
+
   handleInput({ target }) {
     const { id, value } = target;
 
@@ -24,36 +30,50 @@ export default class Login extends Component {
   render() {
     const { name, email } = this.state;
     return (
-      <form className="form">
-        <label htmlFor="name" className="main__form__label">
-          Name:
-          <input
-            id="name"
-            data-testid="input-player-name"
-            value={ name }
-            onChange={ this.handleInput }
-            className="form__label__input"
-          />
-        </label>
-        <label htmlFor="email" className="form__label">
-          Email:
-          <input
-            id="email"
-            data-testid="input-gravatar-email"
-            value={ email }
-            onChange={ this.handleInput }
-            className="form__label__input"
-          />
-        </label>
+      <>
         <button
           type="button"
-          data-testid="btn-play"
-          disabled={ !name || !email }
+          data-testid="btn-settings"
+          onClick={ () => this.roteSettings() }
           className="form__button"
         >
-          Play!
+          Settings
         </button>
-      </form>
+        <form className="form">
+          <label htmlFor="name" className="main__form__label">
+            Name:
+            <input
+              id="name"
+              data-testid="input-player-name"
+              value={ name }
+              onChange={ this.handleInput }
+              className="form__label__input"
+            />
+          </label>
+          <label htmlFor="email" className="main__form__label">
+            Email:
+            <input
+              id="email"
+              data-testid="input-gravatar-email"
+              value={ email }
+              onChange={ this.handleInput }
+              className="form__label__input"
+            />
+          </label>
+          <button
+            type="button"
+            data-testid="btn-play"
+            disabled={ !name || !email }
+            className="form__button"
+          >
+            Play!
+          </button>
+        </form>
+      </>
     );
   }
 }
+
+Login.propTypes = {
+  push: PropTypes.func,
+}.isRequired;
