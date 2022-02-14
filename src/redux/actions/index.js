@@ -1,6 +1,6 @@
 const token = (state) => ({
   type: 'PLAYER',
-  token: state,
+  player: state,
 });
 
 export default token;

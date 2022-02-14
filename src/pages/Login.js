@@ -9,8 +9,11 @@ class Login extends Component {
     super();
 
     this.state = {
+      token: '',
       name: '',
-      email: '',
+      assertions: 0,
+      score: 0,
+      gravatarEmail: '',
     };
 
     this.handleInput = this.handleInput.bind(this);
@@ -18,9 +21,13 @@ class Login extends Component {
 
   handleButton = (callback) => {
     requestToken().then((data) => {
-      callback(data.token);
+      this.setState({ token: data.token }, () => {
+        callback(this.state);
+      });
       localStorage.setItem('token', data.token);
     });
+    const { history } = this.props;
+    history.push('/game');
   }
 
   handleInput({ target }) {
