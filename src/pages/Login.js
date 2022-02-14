@@ -40,7 +40,7 @@ export default class Login extends Component {
           Settings
         </button>
         <form className="form">
-          <label htmlFor="name" className="main__form__label">
+          <label htmlFor="name" className="form__label">
             Name:
             <input
               id="name"
@@ -50,7 +50,7 @@ export default class Login extends Component {
               className="form__label__input"
             />
           </label>
-          <label htmlFor="email" className="main__form__label">
+          <label htmlFor="email" className="form__label">
             Email:
             <input
               id="email"
