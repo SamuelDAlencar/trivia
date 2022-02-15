@@ -21,4 +21,4 @@ const gameReducer = (state = INITIAL_STATE, action) => {
   }
 };
 
-export default game;
+export default gameReducer;
