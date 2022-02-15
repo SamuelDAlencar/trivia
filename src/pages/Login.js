@@ -3,7 +3,7 @@ import './Login.css';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import token from '../redux/actions';
-import requestToken from '../service/tokenApi';
+import requestToken from '../services/tokenApi';
 
 class Login extends Component {
   constructor() {
@@ -44,7 +44,7 @@ class Login extends Component {
   }
 
   render() {
-    const { name, email } = this.state;
+    const { name, gravatarEmail } = this.state;
     const { handleClick } = this.props;
     return (
       <>
@@ -70,9 +70,9 @@ class Login extends Component {
           <label htmlFor="email" className="form__label">
             Email:
             <input
-              id="email"
+              id="gravatarEmail"
               data-testid="input-gravatar-email"
-              value={ email }
+              value={ gravatarEmail }
               onChange={ this.handleInput }
               className="form__label__input"
             />
@@ -80,7 +80,7 @@ class Login extends Component {
           <button
             type="button"
             data-testid="btn-play"
-            disabled={ !name || !email }
+            disabled={ !name || !gravatarEmail }
             onClick={ () => this.handleButton(handleClick) }
             className="form__button"
           >
