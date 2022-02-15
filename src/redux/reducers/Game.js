@@ -9,7 +9,7 @@ const INITIAL_STATE = {
   token: '',
 };
 
-const game = (state = INITIAL_STATE, action) => {
+const gameReducer = (state = INITIAL_STATE, action) => {
   switch (action.type) {
   case 'PLAYER':
     return {
