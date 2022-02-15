@@ -3,7 +3,7 @@ import './Login.css';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { token, player } from '../redux/actions';
-import requestToken from '../service/tokenApi';
+import requestToken from '../services/tokenApi';
 
 class Login extends Component {
   constructor() {
