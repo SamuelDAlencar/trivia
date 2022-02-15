@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import './Login.css';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import token from '../redux/actions';
@@ -19,13 +20,12 @@ class Login extends Component {
     this.handleInput = this.handleInput.bind(this);
   }
 
-  handleButton = (callback) => {
-    requestToken().then((data) => {
-      this.setState({ token: data.token }, () => {
-        callback(this.state);
-      });
-      localStorage.setItem('token', data.token);
+  handleButton = async (callback) => {
+    const data = await requestToken();
+    this.setState({ token: data.token }, () => {
+      callback(this.state);
     });
+    localStorage.setItem('token', data.token);
     const { history } = this.props;
     history.push('/game');
   }
@@ -47,31 +47,34 @@ class Login extends Component {
     const { name, email } = this.state;
     const { handleClick } = this.props;
     return (
-      <main>
-        <form>
-          <button
-            type="button"
-            data-testid="btn-settings"
-            onClick={ () => this.roteSettings() }
-          >
-            Settings
-          </button>
-          <label htmlFor="name">
-            Name
+      <>
+        <button
+          type="button"
+          data-testid="btn-settings"
+          onClick={ () => this.roteSettings() }
+          className="form__button"
+        >
+          Settings
+        </button>
+        <form className="form">
+          <label htmlFor="name" className="form__label">
+            Name:
             <input
               id="name"
               data-testid="input-player-name"
               value={ name }
               onChange={ this.handleInput }
+              className="form__label__input"
             />
           </label>
-          <label htmlFor="email">
-            Email
+          <label htmlFor="email" className="form__label">
+            Email:
             <input
               id="email"
               data-testid="input-gravatar-email"
               value={ email }
               onChange={ this.handleInput }
+              className="form__label__input"
             />
           </label>
           <button
@@ -79,11 +82,12 @@ class Login extends Component {
             data-testid="btn-play"
             disabled={ !name || !email }
             onClick={ () => this.handleButton(handleClick) }
+            className="form__button"
           >
-            Play
+            Play!
           </button>
         </form>
-      </main>
+      </>
     );
   }
 }
