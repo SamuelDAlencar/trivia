@@ -12,9 +12,8 @@ class Game extends Component {
 
     this.state = {
       apiReturn: [],
-      allQuestions: [],
+      allAnswers: [],
       currQuestion: 0,
-      // randomIndex: Math.floor(Math.random() * 5),
     };
 
     this.saveQuestions = this.saveQuestions.bind(this);
@@ -27,7 +26,7 @@ class Game extends Component {
 
   async saveQuestions() {
     const ERROR_RESPONSE = 3;
-    // const ARRAY_LENGTH = 5;
+    const ARRAY_LENGTH = 0.5;
     const { token, renewToken } = this.props;
     const { currQuestion } = this.state;
     const apiReturn = await triviaApi(token);
@@ -41,7 +40,8 @@ class Game extends Component {
 
       this.setState({
         apiReturn: apiNewReturn.results,
-        allQuestions: [...incorrectAnswers, correctAnswer],
+        allAnswers: [...incorrectAnswers, correctAnswer]
+          .sort(() => Math.random() - ARRAY_LENGTH),
       });
       renewToken(newToken);
     } else {
@@ -51,19 +51,32 @@ class Game extends Component {
 
       this.setState({
         apiReturn: apiReturn.results,
-        allQuestions: [...incorrectAnswers, correctAnswer],
+        allAnswers: [...incorrectAnswers, correctAnswer]
+          .sort(() => Math.random() - ARRAY_LENGTH),
       });
     }
   }
 
   answerButton() {
+    const ARRAY_LENGTH = 0.5;
+
     this.setState((prevState) => ({
       currQuestion: prevState.currQuestion + 1,
-    }));
+    }), () => {
+      const { apiReturn, currQuestion } = this.state;
+      const incorrectAnswers = apiReturn[currQuestion].incorrect_answers;
+      const correctAnswer = apiReturn[currQuestion].correct_answer;
+
+      this.setState({
+        allAnswers: [...incorrectAnswers, correctAnswer]
+          .sort(() => Math.random() - ARRAY_LENGTH),
+      });
+    });
   }
 
   render() {
-    const { apiReturn, currQuestion, allQuestions } = this.state;
+    const { apiReturn, currQuestion, allAnswers } = this.state;
+    console.log(apiReturn);
     return (
       <>
         <Header />
@@ -78,9 +91,10 @@ class Game extends Component {
           >
             { apiReturn.length > 0 && apiReturn[currQuestion].question}
           </h3>
-          {
-            apiReturn.length > 0
-            && allQuestions
+          <section data-testid="answer-options">
+            {
+              apiReturn.length > 0
+            && allAnswers
               .map((answer, i) => (
                 answer.match(apiReturn[currQuestion].correct_answer)
                   ? (
@@ -100,8 +114,9 @@ class Game extends Component {
                       {answer}
                     </button>)
               ))
-          }
-          <button type="button" onClick={ this.answerButton }>Teste</button>
+            }
+            <button type="button" onClick={ this.answerButton }>Teste</button>
+          </section>
         </main>
       </>
     );
