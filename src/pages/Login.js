@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import './Login.css';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import token from '../redux/actions';
+import { token, player } from '../redux/actions';
 import requestToken from '../services/tokenApi';
 
 class Login extends Component {
@@ -94,7 +94,8 @@ class Login extends Component {
 
 const mapDispatchToProps = (dispatch) => ({
   handleClick(state) {
-    dispatch(token(state));
+    dispatch(player(state));
+    dispatch(token(state.token));
   },
 });
 
