@@ -5,7 +5,6 @@ const INITIAL_STATE = {
     assertions: 0,
     score: 0,
     gravatarEmail: '',
-    gravatarSrc: '',
   },
   token: '',
 };
