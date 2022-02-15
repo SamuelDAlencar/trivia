@@ -5,7 +5,6 @@ import propTypes from 'prop-types';
 class Header extends Component {
   render() {
     const { name, gravatarEmail, score } = this.props;
-
     return (
       <header>
         <h2 data-testid="header-player-name">{ name }</h2>
