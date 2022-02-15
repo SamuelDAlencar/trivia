@@ -5,7 +5,7 @@ import propTypes from 'prop-types';
 class Header extends Component {
   render() {
     const { name, gravatarEmail, score } = this.props;
-    console.log(this.props);
+
     return (
       <header>
         <h2 data-testid="header-player-name">{ name }</h2>
@@ -28,7 +28,6 @@ Header.propTypes = {
 }.isRequired;
 
 const mapStateToProps = (state) => {
-  console.log(state.token);
   const { player: { name, gravatarEmail, assertions, score } } = state;
   return {
     name, gravatarEmail, assertions, score,
