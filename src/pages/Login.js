@@ -1,9 +1,9 @@
 import React, { Component } from 'react';
-import './Login.css';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { token, player } from '../redux/actions';
 import requestToken from '../services/tokenApi';
+import './Login.css';
 
 class Login extends Component {
   constructor() {
