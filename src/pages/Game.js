@@ -10,6 +10,7 @@ import './Game.css';
 const ERROR_RESPONSE = 3;
 const QUESTIONS_LENGTH = 5;
 const RANDOM_ASSIST = 0.5;
+const INDEXOF_ASSIST = -1;
 const LOADING = 'Loading...';
 
 class Game extends Component {
@@ -24,6 +25,7 @@ class Game extends Component {
 
     this.getQuestions = this.getQuestions.bind(this);
     this.answerButton = this.answerButton.bind(this);
+    this.nextQuestion = this.nextQuestion.bind(this);
   }
 
   componentDidMount() {
@@ -62,7 +64,21 @@ class Game extends Component {
     }
   }
 
-  answerButton() {
+  answerButton = () => {
+    const allButtons = [...document
+      .getElementsByClassName('game-main__answer-section__answer')];
+
+    allButtons.forEach((button) => {
+      console.log(button);
+      if (button.dataset.testid === 'correct-answer') {
+        button.classList.add('correct');
+      } else {
+        button.classList.add('wrong');
+      }
+    });
+  }
+
+  nextQuestion() {
     this.setState((prevState) => ({
       currQues: prevState.currQues + 1,
     }), () => {
@@ -76,6 +92,15 @@ class Game extends Component {
           .sort(() => Math.random() - QUESTIONS_LENGTH),
       });
     });
+    const allButtons = [...document
+      .getElementsByClassName('game-main__answer-section__answer')];
+    allButtons.forEach((button) => {
+      if (button.dataset.testid === 'correct-answer') {
+        button.classList.remove('correct');
+      } else if (button.dataset.testid.indexOf('wrong') > INDEXOF_ASSIST) {
+        button.classList.remove('wrong');
+      }
+    });
   }
 
   render() {
@@ -83,7 +108,7 @@ class Game extends Component {
     const isFetching = !apiReturn.length > 0;
 
     return (
-      <>
+      <div className="game">
         <Header />
         {
           isFetching
@@ -115,11 +140,7 @@ class Game extends Component {
                             key={ i }
                             data-testid="correct-answer"
                             className="game-main__answer-section__answer"
-                            onClick={
-                              currQues < QUESTIONS_LENGTH - 1
-                                ? this.answerButton
-                                : undefined
-                            }
+                            onClick={ this.answerButton }
                           >
                             {answer}
                           </button>)
@@ -129,20 +150,26 @@ class Game extends Component {
                             key={ i }
                             data-testid={ `wrong-answer-${i}` }
                             className="game-main__answer-section__answer"
-                            onClick={
-                              currQues < QUESTIONS_LENGTH - 1
-                                ? this.answerButton
-                                : undefined
-                            }
+                            onClick={ this.answerButton }
                           >
                             {answer}
                           </button>)
                     ))}
                 </section>
+                <button
+                  type="button"
+                  data-testid="btn-next"
+                  className="game-main__next-button"
+                  onClick={ currQues < QUESTIONS_LENGTH - 1
+                    ? this.nextQuestion
+                    : undefined }
+                >
+                  Próxima questão
+                </button>
               </main>
             )
         }
-      </>
+      </div>
     );
   }
 }
