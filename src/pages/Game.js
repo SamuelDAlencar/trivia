@@ -5,7 +5,7 @@ import Header from '../components/Header';
 import triviaApi from '../services/triviaApi';
 import { token as tokenAction } from '../redux/actions';
 import requestToken from '../services/tokenApi';
-import './Game.css';
+import './style/Game.css';
 
 const ERROR_RESPONSE = 3;
 const QUESTIONS_LENGTH = 5;
@@ -205,7 +205,9 @@ class Game extends Component {
               </main>
             )
         }
-        <p>{ `timer: ${time}`}</p>
+        <footer className="footerTime">
+          <h4>{ `Timer:  ${time}`}</h4>
+        </footer>
       </div>
     );
   }
