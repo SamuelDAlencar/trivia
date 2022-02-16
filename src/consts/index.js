@@ -1,0 +1,12 @@
+export const ERROR_RESPONSE = 3;
+export const QUESTIONS_LENGTH = 5;
+export const RANDOM_ASSIST = 0.5;
+export const INDEXOF_ASSIST = -1;
+export const MIL = 1000;
+export const LOADING = 'Loading...';
+export const CORRECT_ANSWER = 'correct-answer';
+export const BASE_SCORE = 10;
+export const EASY_SCORE = 1;
+export const MEDIUM_SCORE = 2;
+export const HARD_SCORE = 3;
+export const CLASS_BTN = 'game-main__answer-section__answer';
