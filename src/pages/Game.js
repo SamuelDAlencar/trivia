@@ -159,6 +159,7 @@ class Game extends Component {
                 <button
                   type="button"
                   data-testid="btn-next"
+                  className="game-main__next-button"
                   onClick={ currQues < QUESTIONS_LENGTH - 1
                     ? this.nextQuestion
                     : undefined }
