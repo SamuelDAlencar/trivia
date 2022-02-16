@@ -6,7 +6,7 @@ import triviaApi from '../services/triviaApi';
 import { token as tokenAction, score as scoreAction } from '../redux/actions';
 import requestToken from '../services/tokenApi';
 import './Game.css';
-import * as global from '../helpers/GlobalConsts';
+import * as global from '../consts';
 
 class Game extends Component {
   constructor() {
@@ -19,6 +19,7 @@ class Game extends Component {
       isDisabled: false,
       score: 0,
       difScore: 0,
+      answered: false,
     };
   }
 
@@ -124,17 +125,20 @@ class Game extends Component {
         button.classList.add('wrong');
       }
     });
+    this.setState({
+      answered: true,
+    });
   }
 
   nextQuestion = () => {
     this.setState((prevState) => ({
+      answered: false,
       currQues: prevState.currQues + 1,
     }), () => {
       const { currQues } = this.state;
       const { apiReturn } = this.state;
       const incorrectAnswers = apiReturn[currQues].incorrect_answers;
       const correctAnswer = apiReturn[currQues].correct_answer;
-
       this.setState({
         currAnswers: [...incorrectAnswers, correctAnswer]
           .sort(() => Math.random() - global.RANDOM_ASSIST),
@@ -155,7 +159,7 @@ class Game extends Component {
   }
 
   render() {
-    const { apiReturn, currQues, currAnswers, isDisabled, time } = this.state;
+    const { apiReturn, currQues, currAnswers, isDisabled, time, answered } = this.state;
     const isFetching = !apiReturn.length > 0;
 
     return (
@@ -183,41 +187,35 @@ class Game extends Component {
                   className="game-main__answers-section"
                 >
                   {currAnswers
-                    .map((answer, i) => (answer.match(apiReturn[currQues].correct_answer)
-                      ? (
-                        <button
-                          type="button"
-                          key={ i }
-                          data-testid="correct-answer"
-                          className="game-main__answer-section__answer"
-                          disabled={ isDisabled }
-                          onClick={ this.answerButton }
-                        >
-                          {answer}
-                        </button>)
-                      : (
-                        <button
-                          type="button"
-                          key={ i }
-                          data-testid={ `wrong-answer-${i}` }
-                          className="game-main__answer-section__answer"
-                          disabled={ isDisabled }
-                          onClick={ this.answerButton }
-                        >
-                          {answer}
-                        </button>)
+                    .map((answer, i) => (
+                      <button
+                        type="button"
+                        key={ i }
+                        data-testid={
+                          answer.match(apiReturn[currQues].correct_answer)
+                            ? 'correct-answer'
+                            : `wrong-answer-${i}`
+                        }
+                        className="game-main__answer-section__answer"
+                        disabled={ isDisabled }
+                        onClick={ this.answerButton }
+                      >
+                        {answer}
+                      </button>
                     ))}
                 </section>
-                <button
-                  type="button"
-                  data-testid="btn-next"
-                  className="game-main__next-button"
-                  onClick={ currQues < global.QUESTIONS_LENGTH - 1
-                    ? this.nextQuestion
-                    : undefined }
-                >
-                  Próxima questão
-                </button>
+                { answered
+                  && (
+                    <button
+                      type="button"
+                      data-testid="btn-next"
+                      className="game-main__next-button"
+                      onClick={ currQues < global.QUESTIONS_LENGTH - 1
+                        ? this.nextQuestion
+                        : undefined }
+                    >
+                      Próxima questão
+                    </button>)}
               </main>
             )
         }
