@@ -11,7 +11,9 @@ const ERROR_RESPONSE = 3;
 const QUESTIONS_LENGTH = 5;
 const RANDOM_ASSIST = 0.5;
 const INDEXOF_ASSIST = -1;
+const MIL = 1000;
 const LOADING = 'Loading...';
+const ClassBtn = 'game-main__answer-section__answer';
 
 class Game extends Component {
   constructor() {
@@ -21,6 +23,8 @@ class Game extends Component {
       apiReturn: [],
       currAnswers: [],
       currQues: 0,
+      time: 30,
+      isDisabled: false,
     };
 
     this.getQuestions = this.getQuestions.bind(this);
@@ -30,6 +34,7 @@ class Game extends Component {
 
   componentDidMount() {
     this.getQuestions();
+    this.handleTimer();
   }
 
   async getQuestions() {
@@ -64,10 +69,30 @@ class Game extends Component {
     }
   }
 
+  handleTimer = () => {
+    this.handleCounter = setInterval(() => {
+      this.setState((prevState) => ({
+        time: prevState.time - 1,
+        isDisabled: false,
+      }));
+      const { time } = this.state;
+      if (time === 0) {
+        clearInterval(this.handleCounter);
+        this.setState({
+          isDisabled: true,
+          time: 30,
+        }, () => {
+          const allButtons = [...document
+            .getElementsByClassName(ClassBtn)];
+          allButtons.forEach((button) => button.classList.add('wrong'));
+        });
+      }
+    }, MIL);
+  };
+
   answerButton = () => {
     const allButtons = [...document
-      .getElementsByClassName('game-main__answer-section__answer')];
-
+      .getElementsByClassName(ClassBtn)];
     allButtons.forEach((button) => {
       console.log(button);
       if (button.dataset.testid === 'correct-answer') {
@@ -101,10 +126,11 @@ class Game extends Component {
         button.classList.remove('wrong');
       }
     });
+    this.handleTimer();
   }
 
   render() {
-    const { apiReturn, currQues, currAnswers } = this.state;
+    const { apiReturn, currQues, currAnswers, isDisabled, time } = this.state;
     const isFetching = !apiReturn.length > 0;
 
     return (
@@ -140,6 +166,7 @@ class Game extends Component {
                             key={ i }
                             data-testid="correct-answer"
                             className="game-main__answer-section__answer"
+                            disabled={ isDisabled }
                             onClick={ this.answerButton }
                           >
                             {answer}
@@ -150,6 +177,7 @@ class Game extends Component {
                             key={ i }
                             data-testid={ `wrong-answer-${i}` }
                             className="game-main__answer-section__answer"
+                            disabled={ isDisabled }
                             onClick={ this.answerButton }
                           >
                             {answer}
@@ -169,6 +197,7 @@ class Game extends Component {
               </main>
             )
         }
+        <p>{ `timer: ${time}`}</p>
       </div>
     );
   }
