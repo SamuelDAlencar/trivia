@@ -1,4 +1,4 @@
-import { LOG_IN } from '../actions';
+import { LOG_IN, SCORE } from '../actions';
 
 const INITIAL_STATE = {
   player: {
@@ -13,6 +13,11 @@ const playerReducer = (state = INITIAL_STATE, action) => {
   switch (action.type) {
   case LOG_IN:
     return action.player;
+  case SCORE:
+    return {
+      ...state.player,
+      score: action.score,
+    };
   default:
     return state;
   }
