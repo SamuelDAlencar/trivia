@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import propTypes from 'prop-types';
 import md5 from 'crypto-js/md5';
+import '../pages/Game.css';
 
 class Header extends Component {
   constructor() {

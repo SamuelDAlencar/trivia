@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { token, player } from '../redux/actions';
 import requestToken from '../services/tokenApi';
+import logo from '../trivia.png';
 import './Login.css';
 
 class Login extends Component {
@@ -47,7 +48,7 @@ class Login extends Component {
     const { name, gravatarEmail } = this.state;
     const { handleClick } = this.props;
     return (
-      <>
+      <div className="login">
         <button
           type="button"
           data-testid="btn-settings"
@@ -57,21 +58,22 @@ class Login extends Component {
           Settings
         </button>
         <form className="form">
+          <img src={ logo } className="App-logo" alt="logo" />
           <label htmlFor="name" className="form__label">
-            Name:
             <input
               id="name"
               data-testid="input-player-name"
+              placeholder="Name"
               value={ name }
               onChange={ this.handleInput }
               className="form__label__input"
             />
           </label>
           <label htmlFor="email" className="form__label">
-            Email:
             <input
               id="gravatarEmail"
               data-testid="input-gravatar-email"
+              placeholder="Email"
               value={ gravatarEmail }
               onChange={ this.handleInput }
               className="form__label__input"
@@ -87,7 +89,7 @@ class Login extends Component {
             Play!
           </button>
         </form>
-      </>
+      </div>
     );
   }
 }

@@ -74,6 +74,7 @@ class Game extends Component {
   }
 
   answerButton() {
+    this.handleClick();
     this.setState((prevState) => ({
       currQues: prevState.currQues + 1,
     }), () => {
@@ -94,7 +95,7 @@ class Game extends Component {
     const isFetching = !apiReturn.length > 0;
 
     return (
-      <>
+      <div className="game">
         <Header />
         {
           isFetching
@@ -153,7 +154,7 @@ class Game extends Component {
               </main>
             )
         }
-      </>
+      </div>
     );
   }
 }

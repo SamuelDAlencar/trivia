@@ -1,6 +1,46 @@
+/* css antigo */
+.App-logo {
+  height: 15vmin;
+  margin-bottom: 40px;
+  pointer-events: none;
+}
+
+@media ( prefers-reduced-motion : no-preference ) {
+
+  .App-logo {
+    animation: shake infinite 0.82s cubic-bezier(0.36, 0.07, 0.19, 0.97) both;
+  }
+}
+
+.login {
+  background-image: linear-gradient(45deg, blue, purple);
+  color: white;
+  min-height: 100vh;
+}
+
+@keyframes shake {
+
+  10%, 90% {
+    transform: translate3d(-1px, 0, 0);
+  }
+
+  20%, 80% {
+    transform: translate3d(2px, 0, 0);
+  }
+
+  30%, 50%, 70% {
+    transform: translate3d(-4px, 0, 0);
+  }
+
+  40%, 60% {
+    transform: translate3d(4px, 0, 0);
+  }
+}
+
+/* tela de login */
 .form {
   align-items: center;
-  border: 1px solid rgb(90, 90, 90);
+  background-color: rgba(0, 0, 0, 0.7);
   border-radius: 5px;
   display: flex;
   flex-direction: column;
@@ -16,12 +56,12 @@
 }
 
 .form__label__input {
-  border: 0;
-  border-bottom: 1px solid rgb(90, 90, 90);
-  border-radius: 5px;
-  margin: 0 5px;
-  padding: 5px;
-  width: fit-content;
+  border: none;
+  border-radius: 2px;
+  font-size: 15px;
+  outline: none;
+  padding: 10px;
+  width: 95%;
 }
 
 .form__label__input:focus {
@@ -42,6 +82,15 @@
 }
 
 .form__button {
-  font-size: 18px;
-  padding: 8px 16px;
+  background-color: dodgerblue;
+  border: none;
+  border-radius: 5px;
+  color: white;
+  font-size: 20px;
+  padding: 12px;
+}
+
+.form__button:hover {
+  background-color: rgb(3, 85, 167);
+  transition: all 0.3s;
 }
