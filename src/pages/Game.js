@@ -70,6 +70,7 @@ class Game extends Component {
   }
 
   handleTimer = () => {
+    clearInterval(this.handleCounter);
     this.handleCounter = setInterval(() => {
       this.setState((prevState) => ({
         time: prevState.time - 1,
@@ -126,7 +127,7 @@ class Game extends Component {
         button.classList.remove('wrong');
       }
     });
-    this.handleTimer();
+    this.setState({ time: 30 }, () => this.handleTimer());
   }
 
   render() {
