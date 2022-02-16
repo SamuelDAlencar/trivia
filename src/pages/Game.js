@@ -6,24 +6,11 @@ import triviaApi from '../services/triviaApi';
 import { token as tokenAction, score as scoreAction } from '../redux/actions';
 import requestToken from '../services/tokenApi';
 import './Game.css';
-
-const ERROR_RESPONSE = 3;
-const QUESTIONS_LENGTH = 5;
-const RANDOM_ASSIST = 0.5;
-const INDEXOF_ASSIST = -1;
-const MIL = 1000;
-const LOADING = 'Loading...';
-const CORRECT_ANSWER = 'correct-answer';
-const BASE_SCORE = 10;
-const EASY_SCORE = 1;
-const MEDIUM_SCORE = 2;
-const HARD_SCORE = 3;
-const ClassBtn = 'game-main__answer-section__answer';
+import * as global from '../helpers/GlobalConsts';
 
 class Game extends Component {
   constructor() {
     super();
-
     this.state = {
       apiReturn: [],
       currAnswers: [],
@@ -33,10 +20,6 @@ class Game extends Component {
       score: 0,
       difScore: 0,
     };
-
-    this.getQuestions = this.getQuestions.bind(this);
-    this.answerButton = this.answerButton.bind(this);
-    this.nextQuestion = this.nextQuestion.bind(this);
   }
 
   componentDidMount() {
@@ -44,12 +27,12 @@ class Game extends Component {
     this.handleTimer();
   }
 
-  async getQuestions() {
+  getQuestions = async () => {
     const { token, renewToken } = this.props;
     const { currQues } = this.state;
     const apiReturn = await triviaApi(token);
 
-    if (apiReturn.response_code === ERROR_RESPONSE) {
+    if (apiReturn.response_code === global.ERROR_RESPONSE) {
       const newToken = await requestToken();
       const newApiReturn = await triviaApi(newToken.token);
       const { results } = newApiReturn;
@@ -57,17 +40,17 @@ class Game extends Component {
       const correctAnswer = results[currQues].correct_answer;
 
       if (results[currQues].difficulty === 'easy') {
-        this.setState({ difScore: EASY_SCORE });
+        this.setState({ difScore: global.EASY_SCORE });
       } else if (results[currQues].difficulty === 'medium') {
-        this.setState({ difScore: MEDIUM_SCORE });
+        this.setState({ difScore: global.MEDIUM_SCORE });
       } else if (results[currQues].difficulty === 'hard') {
-        this.setState({ difScore: HARD_SCORE });
+        this.setState({ difScore: global.HARD_SCORE });
       }
 
       this.setState({
         apiReturn: newApiReturn.results,
         currAnswers: [...incorrectAnswers, correctAnswer]
-          .sort(() => Math.random() - RANDOM_ASSIST),
+          .sort(() => Math.random() - global.RANDOM_ASSIST),
       });
 
       renewToken(newToken);
@@ -77,17 +60,17 @@ class Game extends Component {
       const correctAnswer = results[currQues].correct_answer;
 
       if (results[currQues].difficulty === 'easy') {
-        this.setState({ difScore: EASY_SCORE });
+        this.setState({ difScore: global.EASY_SCORE });
       } else if (results[currQues].difficulty === 'medium') {
-        this.setState({ difScore: MEDIUM_SCORE });
+        this.setState({ difScore: global.MEDIUM_SCORE });
       } else if (results[currQues].difficulty === 'hard') {
-        this.setState({ difScore: HARD_SCORE });
+        this.setState({ difScore: global.HARD_SCORE });
       }
 
       this.setState({
         apiReturn: apiReturn.results,
         currAnswers: [...incorrectAnswers, correctAnswer]
-          .sort(() => Math.random() - RANDOM_ASSIST),
+          .sort(() => Math.random() - global.RANDOM_ASSIST),
       });
     }
   }
@@ -100,6 +83,7 @@ class Game extends Component {
         isDisabled: false,
       }));
       const { time } = this.state;
+
       if (time === 0) {
         clearInterval(this.handleCounter);
         this.setState({
@@ -107,21 +91,24 @@ class Game extends Component {
           time: 30,
         }, () => {
           const allButtons = [...document
-            .getElementsByClassName(ClassBtn)];
+            .getElementsByClassName(global.CLASS_BTN)];
           allButtons.forEach((button) => button.classList.add('wrong'));
         });
       }
-    }, MIL);
+    }, global.MIL);
   };
 
   answerButton = ({ target }) => {
     const { updateScore } = this.props;
     const { time } = this.state;
-    if (target.dataset.testid === CORRECT_ANSWER) {
+    const allButtons = [...document
+      .getElementsByClassName(global.CLASS_BTN)];
+
+    if (target.dataset.testid === global.CORRECT_ANSWER) {
       const { difScore } = this.state;
       this
         .setState((prevState) => ({
-          score: prevState.score + (BASE_SCORE + (time * difScore)),
+          score: prevState.score + (global.BASE_SCORE + (time * difScore)),
         }), () => {
           const { score } = this.state;
           updateScore(score);
@@ -129,11 +116,9 @@ class Game extends Component {
         });
     }
 
-    const allButtons = [...document
-      .getElementsByClassName(ClassBtn)];
     allButtons.forEach((button) => {
       console.log(button);
-      if (button.dataset.testid === CORRECT_ANSWER) {
+      if (button.dataset.testid === global.CORRECT_ANSWER) {
         button.classList.add('correct');
       } else {
         button.classList.add('wrong');
@@ -141,7 +126,7 @@ class Game extends Component {
     });
   }
 
-  nextQuestion() {
+  nextQuestion = () => {
     this.setState((prevState) => ({
       currQues: prevState.currQues + 1,
     }), () => {
@@ -152,15 +137,17 @@ class Game extends Component {
 
       this.setState({
         currAnswers: [...incorrectAnswers, correctAnswer]
-          .sort(() => Math.random() - RANDOM_ASSIST),
+          .sort(() => Math.random() - global.RANDOM_ASSIST),
       });
     });
+
     const allButtons = [...document
       .getElementsByClassName('game-main__answer-section__answer')];
+
     allButtons.forEach((button) => {
       if (button.dataset.testid === 'correct-answer') {
         button.classList.remove('correct');
-      } else if (button.dataset.testid.indexOf('wrong') > INDEXOF_ASSIST) {
+      } else if (button.dataset.testid.indexOf('wrong') > global.INDEXOF_ASSIST) {
         button.classList.remove('wrong');
       }
     });
@@ -176,7 +163,7 @@ class Game extends Component {
         <Header />
         {
           isFetching
-            ? <h1 className="game-loading">{LOADING}</h1>
+            ? <h1 className="game-loading">{global.LOADING}</h1>
             : (
               <main className="game-main">
                 <h4
@@ -196,37 +183,36 @@ class Game extends Component {
                   className="game-main__answers-section"
                 >
                   {currAnswers
-                    .map((answer, i) => (
-                      answer.match(apiReturn[currQues].correct_answer)
-                        ? (
-                          <button
-                            type="button"
-                            key={ i }
-                            data-testid="correct-answer"
-                            className="game-main__answer-section__answer"
-                            disabled={ isDisabled }
-                            onClick={ this.answerButton }
-                          >
-                            {answer}
-                          </button>)
-                        : (
-                          <button
-                            type="button"
-                            key={ i }
-                            data-testid={ `wrong-answer-${i}` }
-                            className="game-main__answer-section__answer"
-                            disabled={ isDisabled }
-                            onClick={ this.answerButton }
-                          >
-                            {answer}
-                          </button>)
+                    .map((answer, i) => (answer.match(apiReturn[currQues].correct_answer)
+                      ? (
+                        <button
+                          type="button"
+                          key={ i }
+                          data-testid="correct-answer"
+                          className="game-main__answer-section__answer"
+                          disabled={ isDisabled }
+                          onClick={ this.answerButton }
+                        >
+                          {answer}
+                        </button>)
+                      : (
+                        <button
+                          type="button"
+                          key={ i }
+                          data-testid={ `wrong-answer-${i}` }
+                          className="game-main__answer-section__answer"
+                          disabled={ isDisabled }
+                          onClick={ this.answerButton }
+                        >
+                          {answer}
+                        </button>)
                     ))}
                 </section>
                 <button
                   type="button"
                   data-testid="btn-next"
                   className="game-main__next-button"
-                  onClick={ currQues < QUESTIONS_LENGTH - 1
+                  onClick={ currQues < global.QUESTIONS_LENGTH - 1
                     ? this.nextQuestion
                     : undefined }
                 >
@@ -252,12 +238,8 @@ const mapStateToProps = (state) => {
 };
 
 const mapDispatchToProps = (dispatch) => ({
-  renewToken(token) {
-    dispatch(tokenAction(token));
-  },
-  updateScore(score) {
-    dispatch(scoreAction(score));
-  },
+  renewToken(token) { dispatch(tokenAction(token)); },
+  updateScore(score) { dispatch(scoreAction(score)); },
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Game);
