@@ -20,3 +20,11 @@
   background-color: rgb(107, 171, 255);
   color: rgb(214, 221, 228);
 }
+
+.correct {
+  border: 3px solid rgb(6, 240, 15);
+}
+
+.wrong {
+  border: 3px solid red;
+}

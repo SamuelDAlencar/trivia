@@ -62,6 +62,17 @@ class Game extends Component {
     }
   }
 
+  handleClick =() => {
+    const allButtons = document.querySelectorAll('button');
+    allButtons.forEach((button) => {
+      if (button.dataset.testid === 'correct-answer') {
+        button.className = 'correct';
+      } else {
+        button.className = 'wrong';
+      }
+    });
+  }
+
   answerButton() {
     this.setState((prevState) => ({
       currQues: prevState.currQues + 1,
