@@ -93,3 +93,13 @@
   background-color: rgb(3, 85, 167);
   transition: all 0.3s;
 }
+
+.settings {
+  min-height: 100vh;
+}
+
+.headerSettings {
+  color: aliceblue;
+  margin: 150px auto;
+  text-align: center;
+}
