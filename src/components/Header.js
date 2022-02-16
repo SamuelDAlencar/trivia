@@ -29,7 +29,7 @@ class Header extends Component {
 
     return (
       <header>
-        <h2 data-testid="header-player-name">{ name }</h2>
+        <h4 data-testid="header-player-name">{ name }</h4>
         <img
           data-testid="header-profile-picture"
           alt="profile_image"

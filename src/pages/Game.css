@@ -1,0 +1,22 @@
+.game-main, .game-loading {
+  text-align: center;
+}
+
+.game-main__answer-section__answer {
+  background-color: rgb(136, 188, 255);
+  border: 0;
+  border-radius: 2px;
+  cursor: pointer;
+  font-size: 18px;
+  margin: 1%;
+  padding: 10px;
+}
+
+.game-main__answer-section__answer:hover {
+  color: aliceblue;
+}
+
+.game-main__answer-section__answer:active {
+  background-color: rgb(107, 171, 255);
+  color: rgb(214, 221, 228);
+}

@@ -5,6 +5,12 @@ import Header from '../components/Header';
 import triviaApi from '../services/triviaApi';
 import { token as tokenAction } from '../redux/actions';
 import requestToken from '../services/tokenApi';
+import './Game.css';
+
+const ERROR_RESPONSE = 3;
+const QUESTIONS_LENGTH = 5;
+const RANDOM_ASSIST = 0.5;
+const LOADING = 'Loading...';
 
 class Game extends Component {
   constructor() {
@@ -12,118 +18,137 @@ class Game extends Component {
 
     this.state = {
       apiReturn: [],
-      allAnswers: [],
-      currQuestion: 0,
+      currAnswers: [],
+      currQues: 0,
     };
 
-    this.saveQuestions = this.saveQuestions.bind(this);
+    this.getQuestions = this.getQuestions.bind(this);
     this.answerButton = this.answerButton.bind(this);
   }
 
   componentDidMount() {
-    this.saveQuestions();
+    this.getQuestions();
   }
 
-  async saveQuestions() {
-    const ERROR_RESPONSE = 3;
-    const ARRAY_LENGTH = 0.5;
+  async getQuestions() {
     const { token, renewToken } = this.props;
-    const { currQuestion } = this.state;
+    const { currQues } = this.state;
     const apiReturn = await triviaApi(token);
 
     if (apiReturn.response_code === ERROR_RESPONSE) {
       const newToken = await requestToken();
-      const apiNewReturn = await triviaApi(newToken.token);
-      const { results } = apiNewReturn;
-      const incorrectAnswers = results[currQuestion].incorrect_answers;
-      const correctAnswer = results[currQuestion].correct_answer;
+      const newApiReturn = await triviaApi(newToken.token);
+      const { results } = newApiReturn;
+      const incorrectAnswers = results[currQues].incorrect_answers;
+      const correctAnswer = results[currQues].correct_answer;
 
       this.setState({
-        apiReturn: apiNewReturn.results,
-        allAnswers: [...incorrectAnswers, correctAnswer]
-          .sort(() => Math.random() - ARRAY_LENGTH),
+        apiReturn: newApiReturn.results,
+        currAnswers: [...incorrectAnswers, correctAnswer]
+          .sort(() => Math.random() - RANDOM_ASSIST),
       });
+
       renewToken(newToken);
     } else {
       const { results } = apiReturn;
-      const incorrectAnswers = results[currQuestion].incorrect_answers;
-      const correctAnswer = results[currQuestion].correct_answer;
+      const incorrectAnswers = results[currQues].incorrect_answers;
+      const correctAnswer = results[currQues].correct_answer;
 
       this.setState({
         apiReturn: apiReturn.results,
-        allAnswers: [...incorrectAnswers, correctAnswer]
-          .sort(() => Math.random() - ARRAY_LENGTH),
+        currAnswers: [...incorrectAnswers, correctAnswer]
+          .sort(() => Math.random() - RANDOM_ASSIST),
       });
     }
   }
 
   answerButton() {
-    const ARRAY_LENGTH = 0.5;
-
     this.setState((prevState) => ({
-      currQuestion: prevState.currQuestion + 1,
+      currQues: prevState.currQues + 1,
     }), () => {
-      const { apiReturn, currQuestion } = this.state;
-      const incorrectAnswers = apiReturn[currQuestion].incorrect_answers;
-      const correctAnswer = apiReturn[currQuestion].correct_answer;
+      const { currQues } = this.state;
+      const { apiReturn } = this.state;
+      const incorrectAnswers = apiReturn[currQues].incorrect_answers;
+      const correctAnswer = apiReturn[currQues].correct_answer;
 
       this.setState({
-        allAnswers: [...incorrectAnswers, correctAnswer]
-          .sort(() => Math.random() - ARRAY_LENGTH),
+        currAnswers: [...incorrectAnswers, correctAnswer]
+          .sort(() => Math.random() - QUESTIONS_LENGTH),
       });
     });
   }
 
   render() {
-    const { apiReturn, currQuestion, allAnswers } = this.state;
-    console.log(apiReturn);
+    const { apiReturn, currQues, currAnswers } = this.state;
+    const isFetching = !apiReturn.length > 0;
+
     return (
       <>
         <Header />
-        <main>
-          <h4
-            data-testid="question-category"
-          >
-            { apiReturn.length > 0 && apiReturn[currQuestion].category}
-          </h4>
-          <h3
-            data-testid="question-text"
-          >
-            { apiReturn.length > 0 && apiReturn[currQuestion].question}
-          </h3>
-          <section data-testid="answer-options">
-            {
-              apiReturn.length > 0
-            && allAnswers
-              .map((answer, i) => (
-                answer.match(apiReturn[currQuestion].correct_answer)
-                  ? (
-                    <button
-                      type="button"
-                      key={ i }
-                      data-testid="correct-answer"
-                    >
-                      {answer}
-                    </button>)
-                  : (
-                    <button
-                      type="button"
-                      key={ i }
-                      data-testid={ `wrong-answer-${i}` }
-                    >
-                      {answer}
-                    </button>)
-              ))
-            }
-            <button type="button" onClick={ this.answerButton }>Teste</button>
-          </section>
-        </main>
+        {
+          isFetching
+            ? <h1 className="game-loading">{LOADING}</h1>
+            : (
+              <main className="game-main">
+                <h4
+                  data-testid="question-category"
+                  className="game-main__category"
+                >
+                  {apiReturn[currQues].category}
+                </h4>
+                <h3
+                  data-testid="question-text"
+                  className="game-main__question"
+                >
+                  {apiReturn[currQues].question}
+                </h3>
+                <section
+                  data-testid="answer-options"
+                  className="game-main__answers-section"
+                >
+                  {currAnswers
+                    .map((answer, i) => (
+                      answer.match(apiReturn[currQues].correct_answer)
+                        ? (
+                          <button
+                            type="button"
+                            key={ i }
+                            data-testid="correct-answer"
+                            className="game-main__answer-section__answer"
+                            onClick={
+                              currQues < QUESTIONS_LENGTH - 1
+                                ? this.answerButton
+                                : undefined
+                            }
+                          >
+                            {answer}
+                          </button>)
+                        : (
+                          <button
+                            type="button"
+                            key={ i }
+                            data-testid={ `wrong-answer-${i}` }
+                            className="game-main__answer-section__answer"
+                            onClick={
+                              currQues < QUESTIONS_LENGTH - 1
+                                ? this.answerButton
+                                : undefined
+                            }
+                          >
+                            {answer}
+                          </button>)
+                    ))}
+                </section>
+              </main>
+            )
+        }
       </>
     );
   }
 }
 
 Game.propTypes = {
+  renewToken: propTypes.func,
   token: propTypes.object,
 }.isRequired;
 
