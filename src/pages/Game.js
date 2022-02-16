@@ -25,6 +25,7 @@ class Game extends Component {
       currQues: 0,
       time: 30,
       isDisabled: false,
+      answerd: false,
     };
 
     this.getQuestions = this.getQuestions.bind(this);
@@ -102,17 +103,20 @@ class Game extends Component {
         button.classList.add('wrong');
       }
     });
+    this.setState({
+      answerd: true,
+    });
   }
 
   nextQuestion() {
     this.setState((prevState) => ({
+      answerd: false,
       currQues: prevState.currQues + 1,
     }), () => {
       const { currQues } = this.state;
       const { apiReturn } = this.state;
       const incorrectAnswers = apiReturn[currQues].incorrect_answers;
       const correctAnswer = apiReturn[currQues].correct_answer;
-
       this.setState({
         currAnswers: [...incorrectAnswers, correctAnswer]
           .sort(() => Math.random() - QUESTIONS_LENGTH),
@@ -131,7 +135,7 @@ class Game extends Component {
   }
 
   render() {
-    const { apiReturn, currQues, currAnswers, isDisabled, time } = this.state;
+    const { apiReturn, currQues, currAnswers, isDisabled, time, answerd } = this.state;
     const isFetching = !apiReturn.length > 0;
 
     return (
@@ -185,16 +189,19 @@ class Game extends Component {
                           </button>)
                     ))}
                 </section>
-                <button
-                  type="button"
-                  data-testid="btn-next"
-                  className="game-main__next-button"
-                  onClick={ currQues < QUESTIONS_LENGTH - 1
-                    ? this.nextQuestion
-                    : undefined }
-                >
-                  Próxima questão
-                </button>
+                { answerd
+                  ? (
+                    <button
+                      type="button"
+                      data-testid="btn-next"
+                      className="game-main__next-button"
+                      onClick={ currQues < QUESTIONS_LENGTH - 1
+                        ? this.nextQuestion
+                        : undefined }
+                    >
+                      Próxima questão
+                    </button>)
+                  : ' ' }
               </main>
             )
         }
