@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { token, player } from '../redux/actions';
+import { tokenAction, playerAction } from '../redux/actions';
 import requestToken from '../services/tokenApi';
 import logo from '../trivia.png';
 import './Login.css';
@@ -96,8 +96,8 @@ class Login extends Component {
 
 const mapDispatchToProps = (dispatch) => ({
   handleClick(state) {
-    dispatch(player(state));
-    dispatch(token(state.token));
+    dispatch(playerAction(state));
+    dispatch(tokenAction(state.token));
   },
 });
 

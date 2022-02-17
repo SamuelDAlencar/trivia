@@ -10,3 +10,4 @@ export const EASY_SCORE = 1;
 export const MEDIUM_SCORE = 2;
 export const HARD_SCORE = 3;
 export const CLASS_BTN = 'game-main__answer-section__answer';
+export const ASSERTIONS = 3;

@@ -3,7 +3,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import Header from '../components/Header';
 import triviaApi from '../services/triviaApi';
-import { token as tokenAction, score as scoreAction } from '../redux/actions';
+import { tokenAction, scoreAction } from '../redux/actions';
 import requestToken from '../services/tokenApi';
 import './Game.css';
 import * as global from '../consts';
@@ -17,6 +17,7 @@ class Game extends Component {
       time: 30,
       isDisabled: false,
       score: 0,
+      assertions: 0,
       difScore: 0,
       answered: false };
   }
@@ -96,9 +97,11 @@ class Game extends Component {
     if (target.dataset.testid === global.CORRECT_ANSWER) {
       const { difScore } = this.state;
       this.setState((prevState) => ({
-        score: prevState.score + (global.BASE_SCORE + (time * difScore)) }), () => {
-        const { score } = this.state;
-        updateScore(score);
+        score: prevState.score + (global.BASE_SCORE + (time * difScore)),
+        assertions: prevState.assertions + 1,
+      }), () => {
+        const { score, assertions } = this.state;
+        updateScore(score, assertions);
         localStorage.setItem('score', score);
       });
     }
@@ -231,7 +234,7 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => ({
   renewToken(token) { dispatch(tokenAction(token)); },
-  updateScore(score) { dispatch(scoreAction(score)); },
+  updateScore(score, assertions) { dispatch(scoreAction(score, assertions)); },
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Game);

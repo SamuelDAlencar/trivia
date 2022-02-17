@@ -34,7 +34,7 @@ class Header extends Component {
           alt="profile_image"
           src={ `https://www.gravatar.com/avatar/${emailHash}` }
         />
-        <h4 data-testid="header-score">{ score }</h4>
+        <h3 data-testid="header-score">{ score }</h3>
       </header>
     );
   }

@@ -2,17 +2,18 @@ export const LOG_IN = 'LOG_IN';
 export const TOKEN = 'TOKEN';
 export const SCORE = 'SCORE';
 
-export const token = (state) => ({
+export const tokenAction = (state) => ({
   type: TOKEN,
   token: state,
 });
 
-export const player = (state) => ({
+export const playerAction = (state) => ({
   type: LOG_IN,
   player: state,
 });
 
-export const score = (state) => ({
+export const scoreAction = (score, assertions) => ({
   type: SCORE,
-  score: state,
+  score,
+  assertions,
 });
