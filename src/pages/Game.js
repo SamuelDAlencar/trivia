@@ -22,17 +22,13 @@ class Game extends Component {
       currAnswers: [],
       currQues: 0,
     };
-
-    this.getQuestions = this.getQuestions.bind(this);
-    this.answerButton = this.answerButton.bind(this);
-    this.nextQuestion = this.nextQuestion.bind(this);
   }
 
   componentDidMount() {
     this.getQuestions();
   }
 
-  async getQuestions() {
+  getQuestions = async () => {
     const { token, renewToken } = this.props;
     const { currQues } = this.state;
     const apiReturn = await triviaApi(token);
@@ -78,7 +74,12 @@ class Game extends Component {
     });
   }
 
-  nextQuestion() {
+  redToFeedback = () => {
+    const { history } = this.props;
+    history.push('/feedback');
+  }
+
+  nextQuestion = () => {
     this.setState((prevState) => ({
       currQues: prevState.currQues + 1,
     }), () => {
@@ -156,16 +157,27 @@ class Game extends Component {
                           </button>)
                     ))}
                 </section>
-                <button
-                  type="button"
-                  data-testid="btn-next"
-                  className="game-main__next-button"
-                  onClick={ currQues < QUESTIONS_LENGTH - 1
-                    ? this.nextQuestion
-                    : undefined }
-                >
-                  Próxima questão
-                </button>
+                {
+                  currQues < QUESTIONS_LENGTH - 1
+                    ? (
+                      <button
+                        type="button"
+                        data-testid="btn-next"
+                        className="game-main__next-button"
+                        onClick={ this.nextQuestion }
+                      >
+                        Próxima questão
+                      </button>)
+                    : (
+                      <button
+                        type="button"
+                        data-testid="btn-next"
+                        className="game-main__next-button"
+                        onClick={ this.redToFeedback }
+                      >
+                        Feedback final
+                      </button>)
+                }
               </main>
             )
         }
