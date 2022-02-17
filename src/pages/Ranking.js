@@ -3,6 +3,7 @@ import propTypes from 'prop-types';
 import { connect } from 'react-redux';
 import md5 from 'crypto-js/md5';
 import { playerAction, scoreAction } from '../redux/actions';
+import './style/Ranking.css';
 
 class Ranking extends Component {
   constructor() {
@@ -69,6 +70,7 @@ class Ranking extends Component {
         <button
           type="button"
           data-testid="btn-go-home"
+          className="btn"
           onClick={ this.goHome }
         >
           Home

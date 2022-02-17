@@ -1,0 +1,34 @@
+.feedback {
+  color: white;
+  margin-top: 10rem;
+  min-height: 100vh;
+}
+
+.container {
+  align-items: center;
+  background-color: rgba(0, 0, 0, 0.7);
+  border-radius: 10px;
+  display: flex;
+  flex-direction: column;
+  font-size: 1.5rem;
+  margin: 150px auto;
+  padding: 80px;
+  text-align: center;
+  width: 40%;
+}
+
+.btn {
+  background-color: dodgerblue;
+  border: 0;
+  border-radius: 3px;
+  cursor: pointer;
+  font-size: 18px;
+  margin: 2.5%;
+  padding: 10px;
+}
+
+.btn:hover {
+  color: aliceblue;
+  transform: scale(1.2);
+  transition: 0.3s;
+}
