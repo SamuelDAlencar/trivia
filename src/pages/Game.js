@@ -104,7 +104,6 @@ class Game extends Component {
         localStorage.setItem('score', score);
       });
     }
-
     allButtons.forEach((button) => {
       if (button.dataset.testid === global.CORRECT_ANSWER) {
         button.classList.add('correct');
