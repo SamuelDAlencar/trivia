@@ -135,7 +135,6 @@ class Game extends Component {
           .sort(() => Math.random() - global.RANDOM_ASSIST),
       });
     });
-
     const allButtons = [...document
       .getElementsByClassName('game-main__answer-section__answer')];
 
