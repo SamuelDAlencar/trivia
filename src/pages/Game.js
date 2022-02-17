@@ -1,6 +1,7 @@
 import propTypes from 'prop-types';
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import { decode } from 'he';
 import Header from '../components/Header';
 import triviaApi from '../services/triviaApi';
 import { tokenAction, scoreAction } from '../redux/actions';
@@ -169,7 +170,7 @@ class Game extends Component {
                   data-testid="question-text"
                   className="game-main__question"
                 >
-                  {apiReturn[currQues].question}
+                  {decode(apiReturn[currQues].question)}
                 </h3>
                 <section
                   data-testid="answer-options"
