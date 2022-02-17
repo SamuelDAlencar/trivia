@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import { playerAction, scoreAction } from '../redux/actions';
 import * as global from '../consts';
 import './style/Feedback.css';
-import HeaderFeedback from '../components/HeaderFeedback';
+import Header from '../components/Header';
 
 class Feedback extends Component {
   constructor() {
@@ -44,7 +44,7 @@ class Feedback extends Component {
     const { score, assertions } = this.props;
     return (
       <div className="feedback">
-        <HeaderFeedback />
+        <Header />
         <section className="container">
           <h1 data-testid="feedback-total-score">{ `Score: ${score}` }</h1>
           <h1 data-testid="feedback-total-question">{ `Assertions: ${assertions}` }</h1>

@@ -33,7 +33,10 @@ class Header extends Component {
           alt="profile_image"
           src={ `https://www.gravatar.com/avatar/${emailHash}` }
         />
-        <h1 data-testid="header-player-name" className="name">{ `Player: ${name}` }</h1>
+        <h1 className="name">
+          Player:
+          <span data-testid="header-score">{ name }</span>
+        </h1>
         <h2 className="score">
           Score:
           <span data-testid="header-score">{ score }</span>

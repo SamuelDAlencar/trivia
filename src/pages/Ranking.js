@@ -4,7 +4,6 @@ import { connect } from 'react-redux';
 import md5 from 'crypto-js/md5';
 import { playerAction, scoreAction } from '../redux/actions';
 import './style/Ranking.css';
-import HeaderFeedback from '../components/HeaderFeedback';
 
 class Ranking extends Component {
   constructor() {
@@ -55,7 +54,6 @@ class Ranking extends Component {
     const { ranking } = this.state;
     return (
       <div className="ranking">
-        <HeaderFeedback />
         <section className="container">
           <h1 data-testid="ranking-title">Ranking</h1>
           <ul className="ranking-players">
