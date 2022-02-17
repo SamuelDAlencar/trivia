@@ -75,12 +75,11 @@ class Game extends Component {
   handleTimer = () => {
     clearInterval(this.handleCounter);
     this.handleCounter = setInterval(() => {
-      this.setState((prevState) => ({ time: prevState.time - 1, isDisabled: false }));
+      this.setState((prevState) => ({ time: prevState.time - 1 }));
       const { time } = this.state;
-
       if (time === 0) {
         clearInterval(this.handleCounter);
-        this.setState({ isDisabled: true, time: 30 }, () => {
+        this.setState({ isDisabled: true, time: 30, answered: true }, () => {
           const allButtons = [...document
             .getElementsByClassName(global.CLASS_BTN)];
           allButtons.forEach((button) => button.classList.add('wrong'));
@@ -93,7 +92,7 @@ class Game extends Component {
     const { updateScore } = this.props;
     const { time } = this.state;
     const allButtons = [...document.getElementsByClassName(global.CLASS_BTN)];
-
+    this.setState({ isDisabled: true });
     if (target.dataset.testid === global.CORRECT_ANSWER) {
       const { difScore } = this.state;
       this.setState((prevState) => ({
@@ -112,6 +111,7 @@ class Game extends Component {
       } else { button.classList.add('wrong'); }
     });
     this.setState({ answered: true });
+    clearInterval(this.handleCounter);
   }
 
   redToFeedback = () => {
@@ -123,6 +123,7 @@ class Game extends Component {
     this.setState((prevState) => ({
       answered: false,
       currQues: prevState.currQues + 1,
+      isDisabled: false,
     }), () => {
       const { currQues } = this.state;
       const { apiReturn } = this.state;
