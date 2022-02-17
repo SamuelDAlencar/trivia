@@ -53,29 +53,35 @@ class Ranking extends Component {
   render() {
     const { ranking } = this.state;
     return (
-      <>
-        <h1 data-testid="ranking-title">Ranking</h1>
-        <ul className="ranking-players">
-          {ranking.sort((a, b) => b.score - a.score).map((player, i) => (
-            <li key={ i }>
-              <h4 data-testid={ `player-name-${i}` }>
-                {player.name}
-              </h4>
-              <h4 data-testid={ `player-score-${i}` }>
-                {player.score}
-              </h4>
-            </li>
-          ))}
-        </ul>
-        <button
-          type="button"
-          data-testid="btn-go-home"
-          className="btn"
-          onClick={ this.goHome }
-        >
-          Home
-        </button>
-      </>
+      <div className="ranking">
+        <section className="container">
+          <h1 data-testid="ranking-title">Ranking</h1>
+          <ul className="ranking-players">
+            {ranking.sort((a, b) => b.score - a.score).map((player, i) => (
+              <li key={ i }>
+                <h4>
+                  Name:
+                  {' '}
+                  <span data-testid={ `player-name-${i}` }>{player.name}</span>
+                </h4>
+                <h4>
+                  Score:
+                  {' '}
+                  <span data-testid={ `player-score-${i}` }>{player.score}</span>
+                </h4>
+              </li>
+            ))}
+          </ul>
+          <button
+            type="button"
+            data-testid="btn-go-home"
+            className="btn"
+            onClick={ this.goHome }
+          >
+            Home
+          </button>
+        </section>
+      </div>
     );
   }
 }
