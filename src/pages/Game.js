@@ -5,8 +5,8 @@ import Header from '../components/Header';
 import triviaApi from '../services/triviaApi';
 import { token as tokenAction, score as scoreAction } from '../redux/actions';
 import requestToken from '../services/tokenApi';
-import './Game.css';
 import * as global from '../consts';
+import './style/Game.css';
 
 class Game extends Component {
   constructor() {
@@ -219,7 +219,9 @@ class Game extends Component {
               </main>
             )
         }
-        <p>{ `timer: ${time}`}</p>
+        <footer className="footerTime">
+          <h4>{ `Timer:  ${time}`}</h4>
+        </footer>
       </div>
     );
   }
