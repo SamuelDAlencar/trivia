@@ -21,6 +21,7 @@ class Feedback extends Component {
 
   resultsHandler = () => {
     const { assertions } = this.props;
+
     if (assertions < global.ASSERTIONS) {
       this.setState({ scoreFeedback: 'Could be better...' });
     } else if (assertions >= global.ASSERTIONS) {
