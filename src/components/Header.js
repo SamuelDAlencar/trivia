@@ -35,10 +35,12 @@ class Header extends Component {
         />
         <h1 className="name">
           Player:
+          {' '}
           <span data-testid="header-player-name">{ name }</span>
         </h1>
         <h2 className="score">
           Score:
+          {' '}
           <span data-testid="header-score">{ score }</span>
         </h2>
       </header>

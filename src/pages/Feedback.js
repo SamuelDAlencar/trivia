@@ -46,8 +46,16 @@ class Feedback extends Component {
       <div className="feedback">
         <Header />
         <section className="container">
-          <h1 data-testid="feedback-total-score">{ `Score: ${score}` }</h1>
-          <h1 data-testid="feedback-total-question">{ `Assertions: ${assertions}` }</h1>
+          <h1>
+            Score:
+            {' '}
+            <span data-testid="feedback-total-score">{score}</span>
+          </h1>
+          <h1>
+            Assertions:
+            {' '}
+            <span data-testid="feedback-total-question">{assertions}</span>
+          </h1>
           <h1 data-testid="feedback-text">
             { scoreFeedback }
           </h1>
