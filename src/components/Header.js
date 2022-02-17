@@ -25,7 +25,7 @@ class Header extends Component {
   render() {
     const { name, score } = this.props;
     const { emailHash } = this.state;
-    console.log(score);
+
     return (
       <header className="header">
         <img
