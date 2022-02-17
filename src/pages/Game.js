@@ -116,6 +116,7 @@ class Game extends Component {
 
   redToFeedback = () => {
     const { history } = this.props;
+    localStorage.setItem('score', 0);
     history.push('/feedback');
   }
 
