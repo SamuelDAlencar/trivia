@@ -3,7 +3,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import Header from '../components/Header';
 import triviaApi from '../services/triviaApi';
-import { token as tokenAction, score as scoreAction } from '../redux/actions';
+import { tokenAction, scoreAction } from '../redux/actions';
 import requestToken from '../services/tokenApi';
 import * as global from '../consts';
 import './style/Game.css';
@@ -11,16 +11,15 @@ import './style/Game.css';
 class Game extends Component {
   constructor() {
     super();
-    this.state = {
-      apiReturn: [],
+    this.state = { apiReturn: [],
       currAnswers: [],
       currQues: 0,
       time: 30,
       isDisabled: false,
       score: 0,
+      assertions: 0,
       difScore: 0,
-      answered: false,
-    };
+      answered: false };
   }
 
   componentDidMount() {
@@ -47,13 +46,11 @@ class Game extends Component {
       } else if (results[currQues].difficulty === 'hard') {
         this.setState({ difScore: global.HARD_SCORE });
       }
-
       this.setState({
         apiReturn: newApiReturn.results,
         currAnswers: [...incorrectAnswers, correctAnswer]
           .sort(() => Math.random() - global.RANDOM_ASSIST),
       });
-
       renewToken(newToken);
     } else {
       const { results } = apiReturn;
@@ -67,7 +64,6 @@ class Game extends Component {
       } else if (results[currQues].difficulty === 'hard') {
         this.setState({ difScore: global.HARD_SCORE });
       }
-
       this.setState({
         apiReturn: apiReturn.results,
         currAnswers: [...incorrectAnswers, correctAnswer]
@@ -79,18 +75,12 @@ class Game extends Component {
   handleTimer = () => {
     clearInterval(this.handleCounter);
     this.handleCounter = setInterval(() => {
-      this.setState((prevState) => ({
-        time: prevState.time - 1,
-        isDisabled: false,
-      }));
+      this.setState((prevState) => ({ time: prevState.time - 1, isDisabled: false }));
       const { time } = this.state;
 
       if (time === 0) {
         clearInterval(this.handleCounter);
-        this.setState({
-          isDisabled: true,
-          time: 30,
-        }, () => {
+        this.setState({ isDisabled: true, time: 30 }, () => {
           const allButtons = [...document
             .getElementsByClassName(global.CLASS_BTN)];
           allButtons.forEach((button) => button.classList.add('wrong'));
@@ -102,32 +92,31 @@ class Game extends Component {
   answerButton = ({ target }) => {
     const { updateScore } = this.props;
     const { time } = this.state;
-    const allButtons = [...document
-      .getElementsByClassName(global.CLASS_BTN)];
+    const allButtons = [...document.getElementsByClassName(global.CLASS_BTN)];
 
     if (target.dataset.testid === global.CORRECT_ANSWER) {
       const { difScore } = this.state;
-      this
-        .setState((prevState) => ({
-          score: prevState.score + (global.BASE_SCORE + (time * difScore)),
-        }), () => {
-          const { score } = this.state;
-          updateScore(score);
-          localStorage.setItem('score', score);
-        });
+      this.setState((prevState) => ({
+        score: prevState.score + (global.BASE_SCORE + (time * difScore)),
+        assertions: prevState.assertions + 1,
+      }), () => {
+        const { score, assertions } = this.state;
+        updateScore(score, assertions);
+        localStorage.setItem('score', score);
+      });
     }
 
     allButtons.forEach((button) => {
-      console.log(button);
       if (button.dataset.testid === global.CORRECT_ANSWER) {
         button.classList.add('correct');
-      } else {
-        button.classList.add('wrong');
-      }
+      } else { button.classList.add('wrong'); }
     });
-    this.setState({
-      answered: true,
-    });
+    this.setState({ answered: true });
+  }
+
+  redToFeedback = () => {
+    const { history } = this.props;
+    history.push('/feedback');
   }
 
   nextQuestion = () => {
@@ -205,17 +194,25 @@ class Game extends Component {
                     ))}
                 </section>
                 { answered
-                  && (
+                && (currQues < global.QUESTIONS_LENGTH - 1
+                  ? (
                     <button
                       type="button"
                       data-testid="btn-next"
                       className="game-main__next-button"
-                      onClick={ currQues < global.QUESTIONS_LENGTH - 1
-                        ? this.nextQuestion
-                        : undefined }
+                      onClick={ this.nextQuestion }
                     >
                       Próxima questão
-                    </button>)}
+                    </button>)
+                  : (
+                    <button
+                      type="button"
+                      data-testid="btn-next"
+                      className="game-main__next-button"
+                      onClick={ this.redToFeedback }
+                    >
+                      Feedback final
+                    </button>))}
               </main>
             )
         }
@@ -239,7 +236,7 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => ({
   renewToken(token) { dispatch(tokenAction(token)); },
-  updateScore(score) { dispatch(scoreAction(score)); },
+  updateScore(score, assertions) { dispatch(scoreAction(score, assertions)); },
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Game);

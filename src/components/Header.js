@@ -11,15 +11,13 @@ class Header extends Component {
     this.state = {
       emailHash: '',
     };
-
-    this.convertEmail = this.convertEmail.bind(this);
   }
 
   componentDidMount() {
     this.convertEmail();
   }
 
-  convertEmail() {
+  convertEmail = () => {
     const { gravatarEmail } = this.props;
     this.setState({ emailHash: md5(gravatarEmail).toString() });
   }
