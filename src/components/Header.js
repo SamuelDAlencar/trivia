@@ -35,7 +35,7 @@ class Header extends Component {
         />
         <h1 className="name">
           Player:
-          <span data-testid="header-score">{ name }</span>
+          <span data-testid="header-player-name">{ name }</span>
         </h1>
         <h2 className="score">
           Score:
