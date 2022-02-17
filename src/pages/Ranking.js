@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import propTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { playerAction, scoreAction } from '../redux/actions';
+import './style/Ranking.css';
 
 class Ranking extends Component {
   goHome = () => {
@@ -12,17 +13,19 @@ class Ranking extends Component {
 
   render() {
     return (
-      <>
-        <h1 data-testid="ranking-title">Ranking</h1>
-        <button
-          type="button"
-          data-testid="btn-go-home"
-          onClick={ this.goHome }
-        >
-          Home
-        </button>
-
-      </>
+      <div className="ranking">
+        <section className="container">
+          <h1 data-testid="ranking-title">Ranking</h1>
+          <button
+            className="btn"
+            type="button"
+            data-testid="btn-go-home"
+            onClick={ this.goHome }
+          >
+            Home
+          </button>
+        </section>
+      </div>
     );
   }
 }
