@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import { tokenAction, playerAction } from '../redux/actions';
 import requestToken from '../services/tokenApi';
 import logo from '../trivia.png';
-import './Login.css';
+import './style/Login.css';
 
 class Login extends Component {
   constructor() {

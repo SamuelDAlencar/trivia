@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import propTypes from 'prop-types';
 import md5 from 'crypto-js/md5';
-import '../pages/Game.css';
+import '../pages/style/Header.css';
 
 class Header extends Component {
   constructor() {
@@ -27,14 +27,14 @@ class Header extends Component {
     const { emailHash } = this.state;
 
     return (
-      <header>
-        <h4 data-testid="header-player-name">{ name }</h4>
+      <header className="header">
         <img
           data-testid="header-profile-picture"
           alt="profile_image"
           src={ `https://www.gravatar.com/avatar/${emailHash}` }
         />
-        <h3 data-testid="header-score">{ score }</h3>
+        <h1 data-testid="header-player-name" className="name">{ `Jogador: ${name}` }</h1>
+        <h4 data-testid="header-score" className="score">{ `Score: ${score}` }</h4>
       </header>
     );
   }
