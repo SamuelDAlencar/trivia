@@ -2,8 +2,9 @@ import React, { Component } from 'react';
 import propTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { playerAction, scoreAction } from '../redux/actions';
-import Header from '../components/Header';
 import * as global from '../consts';
+import './style/Feedback.css';
+import HeaderFeedback from '../components/HeaderFeedback';
 
 class Feedback extends Component {
   constructor() {
@@ -42,28 +43,32 @@ class Feedback extends Component {
     const { scoreFeedback } = this.state;
     const { score, assertions } = this.props;
     return (
-      <>
-        <Header />
-        <h1 data-testid="feedback-total-score">{ score }</h1>
-        <h1 data-testid="feedback-total-question">{ assertions }</h1>
-        <h1 data-testid="feedback-text">
-          { scoreFeedback }
-        </h1>
-        <button
-          type="button"
-          data-testid="btn-play-again"
-          onClick={ this.playAgain }
-        >
-          Play again!
-        </button>
-        <button
-          type="button"
-          data-testid="btn-ranking"
-          onClick={ this.toRankingPage }
-        >
-          Ranking
-        </button>
-      </>
+      <div className="feedback">
+        <HeaderFeedback />
+        <section className="container">
+          <h1 data-testid="feedback-total-score">{ `Score: ${score}` }</h1>
+          <h1 data-testid="feedback-total-question">{ `Assertions: ${assertions}` }</h1>
+          <h1 data-testid="feedback-text">
+            { scoreFeedback }
+          </h1>
+          <button
+            className="btn"
+            type="button"
+            data-testid="btn-ranking"
+            onClick={ this.toRankingPage }
+          >
+            Ranking
+          </button>
+          <button
+            className="btn"
+            type="button"
+            data-testid="btn-play-again"
+            onClick={ this.playAgain }
+          >
+            Play again!
+          </button>
+        </section>
+      </div>
     );
   }
 }
