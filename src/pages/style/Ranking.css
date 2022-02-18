@@ -4,6 +4,14 @@
   min-height: 100vh;
 }
 
+.ranking-players {
+  text-align: start;
+}
+
+.ranking-players li {
+  border-bottom: 1px solid white;
+}
+
 .container {
   align-items: center;
   background-color: rgba(0, 0, 0, 0.7);
@@ -13,7 +21,6 @@
   font-size: 1.5rem;
   margin: 150px auto;
   padding: 80px;
-  text-align: center;
   width: 40%;
 }
 
@@ -22,9 +29,9 @@
   border: 0;
   border-radius: 3px;
   cursor: pointer;
-  font-size: 18px;
-  margin: 2.5%;
-  padding: 10px;
+  font-size: 25px;
+  margin: 3%;
+  padding: 15px;
 }
 
 .btn:hover {

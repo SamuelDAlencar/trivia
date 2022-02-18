@@ -15,6 +15,7 @@
 .login {
   color: white;
   min-height: 100vh;
+  overflow: hidden;
 }
 
 @keyframes shake {
@@ -52,19 +53,23 @@
 
 .form__label {
   margin: 20px;
+  width: 70%;
 }
 
 .form__label__input {
-  border: none;
+  background-color: inherit;
+  border: 0;
+  border-bottom: 1px solid white;
   border-radius: 2px;
-  font-size: 15px;
+  color: white;
+  font-size: 20px;
   outline: none;
   padding: 10px;
   width: 95%;
 }
 
 .form__label__input:focus {
-  border-color: rgb(114, 175, 89);
+  border-color: dodgerblue;
   outline: none;
 }
 

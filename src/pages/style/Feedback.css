@@ -1,7 +1,7 @@
 .feedback {
   color: white;
-  margin-top: 10rem;
-  min-height: 100vh;
+  height: 100vh;
+  overflow: hidden;
 }
 
 .container {
@@ -11,7 +11,7 @@
   display: flex;
   flex-direction: column;
   font-size: 1.5rem;
-  margin: 150px auto;
+  margin: 150px auto 0;
   padding: 80px;
   text-align: center;
   width: 40%;

@@ -2,23 +2,27 @@
   text-align: center;
 }
 
+.game-loading {
+  margin-top: 300px;
+}
+
 .game-main {
   align-items: center;
-  background-color: rgba(0, 0, 0, 0.9);
+  background-color: rgba(0, 0, 0, 0.7);
   border-radius: 10px;
   display: flex;
   flex-direction: column;
   font-size: 1.5rem;
-  margin: 150px auto;
-  padding: 80px;
+  margin: 180px auto 100px;
+  padding: 50px 80px;
   text-align: center;
   width: 40%;
 }
 
 .game {
   color: white;
-  margin-top: 10rem;
   min-height: 100vh;
+  overflow: hidden;
 }
 
 .game-main__answer-section__answer {
@@ -73,14 +77,19 @@
 }
 
 .footerTime {
-  background-color: rgba(0, 0, 0, 0.9);
-  border-radius: 5px;
+  background-color: rgba(0, 0, 0, 0.7);
+  border-radius: 5px 5px 0 0;
   bottom: 0;
-  font-size: 25px;
-  height: 80px;
+  font-size: 30px;
+  height: fit-content;
   justify-content: center;
-  left: 45%;
+  margin-left: 43%;
+  padding: 30px;
   position: fixed;
   text-align: center;
   width: 10%;
+}
+
+.footerTime h4 {
+  margin: 0;
 }
