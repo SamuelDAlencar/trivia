@@ -28,16 +28,18 @@ class Header extends Component {
 
     return (
       <header className="header">
-        <img
-          data-testid="header-profile-picture"
-          alt="profile_image"
-          src={ `https://www.gravatar.com/avatar/${emailHash}` }
-        />
-        <h1 className="name">
-          Player:
-          {' '}
-          <span data-testid="header-player-name">{ name }</span>
-        </h1>
+        <section className="name-logo">
+          <img
+            data-testid="header-profile-picture"
+            alt="profile_image"
+            src={ `https://www.gravatar.com/avatar/${emailHash}` }
+          />
+          <h1 className="name">
+            Player:
+            {' '}
+            <span data-testid="header-player-name">{ name }</span>
+          </h1>
+        </section>
         <h2 className="score">
           Score:
           {' '}

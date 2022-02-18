@@ -3,6 +3,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { decode } from 'he';
 import Header from '../components/Header';
+import Answer from '../components/Answer';
 import triviaApi from '../services/triviaApi';
 import { tokenAction, scoreAction } from '../redux/actions';
 import requestToken from '../services/tokenApi';
@@ -20,7 +21,8 @@ class Game extends Component {
       score: 0,
       assertions: 0,
       difScore: 0,
-      answered: false };
+      answered: false,
+    };
   }
 
   componentDidMount() {
@@ -32,46 +34,48 @@ class Game extends Component {
     const { token, renewToken, category, difficulty, type } = this.props;
     const { currQues } = this.state;
     const apiReturn = await triviaApi(token, category, difficulty, type);
-    console.log(apiReturn);
-    console.log(token);
 
-    if (apiReturn.response_code === global.ERROR_RESPONSE) {
-      const newToken = await requestToken();
-      const newApiReturn = await triviaApi(newToken.token, category, difficulty, type);
-      const { results } = newApiReturn;
-      const incorrectAnswers = results[currQues].incorrect_answers;
-      const correctAnswer = results[currQues].correct_answer;
+    try {
+      if (apiReturn.response_code === global.ERROR_RESPONSE) {
+        const newToken = await requestToken();
+        const newApiReturn = await triviaApi(newToken.token, category, difficulty, type);
+        const { results } = newApiReturn;
+        const incorrectAnswers = results[currQues].incorrect_answers;
+        const correctAnswer = results[currQues].correct_answer;
 
-      if (results[currQues].difficulty === 'easy') {
-        this.setState({ difScore: global.EASY_SCORE });
-      } else if (results[currQues].difficulty === 'medium') {
-        this.setState({ difScore: global.MEDIUM_SCORE });
-      } else if (results[currQues].difficulty === 'hard') {
-        this.setState({ difScore: global.HARD_SCORE });
+        if (results[currQues].difficulty === 'easy') {
+          this.setState({ difScore: global.EASY_SCORE });
+        } else if (results[currQues].difficulty === 'medium') {
+          this.setState({ difScore: global.MEDIUM_SCORE });
+        } else if (results[currQues].difficulty === 'hard') {
+          this.setState({ difScore: global.HARD_SCORE });
+        }
+        this.setState({
+          apiReturn: newApiReturn.results,
+          currAnswers: [...incorrectAnswers, correctAnswer]
+            .sort(() => Math.random() - global.RANDOM_ASSIST),
+        });
+        renewToken(newToken);
+      } else {
+        const { results } = apiReturn;
+        const incorrectAnswers = results[currQues].incorrect_answers;
+        const correctAnswer = results[currQues].correct_answer;
+
+        if (results[currQues].difficulty === 'easy') {
+          this.setState({ difScore: global.EASY_SCORE });
+        } else if (results[currQues].difficulty === 'medium') {
+          this.setState({ difScore: global.MEDIUM_SCORE });
+        } else if (results[currQues].difficulty === 'hard') {
+          this.setState({ difScore: global.HARD_SCORE });
+        }
+        this.setState({
+          apiReturn: apiReturn.results,
+          currAnswers: [...incorrectAnswers, correctAnswer]
+            .sort(() => Math.random() - global.RANDOM_ASSIST),
+        });
       }
-      this.setState({
-        apiReturn: newApiReturn.results,
-        currAnswers: [...incorrectAnswers, correctAnswer]
-          .sort(() => Math.random() - global.RANDOM_ASSIST),
-      });
-      renewToken(newToken);
-    } else {
-      const { results } = apiReturn;
-      const incorrectAnswers = results[currQues].incorrect_answers;
-      const correctAnswer = results[currQues].correct_answer;
-
-      if (results[currQues].difficulty === 'easy') {
-        this.setState({ difScore: global.EASY_SCORE });
-      } else if (results[currQues].difficulty === 'medium') {
-        this.setState({ difScore: global.MEDIUM_SCORE });
-      } else if (results[currQues].difficulty === 'hard') {
-        this.setState({ difScore: global.HARD_SCORE });
-      }
-      this.setState({
-        apiReturn: apiReturn.results,
-        currAnswers: [...incorrectAnswers, correctAnswer]
-          .sort(() => Math.random() - global.RANDOM_ASSIST),
-      });
+    } catch (error) {
+      console.error(error);
     }
   }
 
@@ -132,9 +136,8 @@ class Game extends Component {
       const { apiReturn } = this.state;
       const incorrectAnswers = apiReturn[currQues].incorrect_answers;
       const correctAnswer = apiReturn[currQues].correct_answer;
-      this.setState({
-        currAnswers: [...incorrectAnswers, correctAnswer]
-          .sort(() => Math.random() - global.RANDOM_ASSIST),
+      this.setState({ currAnswers: [...incorrectAnswers, correctAnswer]
+        .sort(() => Math.random() - global.RANDOM_ASSIST),
       });
     });
     const allButtons = [...document
@@ -153,7 +156,6 @@ class Game extends Component {
   render() {
     const { apiReturn, currQues, currAnswers, isDisabled, time, answered } = this.state;
     const isFetching = !apiReturn.length > 0;
-
     return (
       <div className="game">
         <Header />
@@ -178,23 +180,13 @@ class Game extends Component {
                   data-testid="answer-options"
                   className="game-main__answers-section"
                 >
-                  {currAnswers
-                    .map((answer, i) => (
-                      <button
-                        type="button"
-                        key={ i }
-                        data-testid={
-                          answer.match(apiReturn[currQues].correct_answer)
-                            ? 'correct-answer'
-                            : `wrong-answer-${i}`
-                        }
-                        className="game-main__answer-section__answer"
-                        disabled={ isDisabled }
-                        onClick={ this.answerButton }
-                      >
-                        {answer}
-                      </button>
-                    ))}
+                  <Answer
+                    answers={ currAnswers }
+                    isDisabled={ isDisabled }
+                    apiReturn={ apiReturn }
+                    currQues={ currQues }
+                    answerButton={ this.answerButton }
+                  />
                 </section>
                 { answered
                 && (currQues < global.QUESTIONS_LENGTH - 1
@@ -205,7 +197,7 @@ class Game extends Component {
                       className="game-main__next-button"
                       onClick={ this.nextQuestion }
                     >
-                      Próxima questão
+                      Next!
                     </button>)
                   : (
                     <button
@@ -214,7 +206,7 @@ class Game extends Component {
                       className="game-main__next-button"
                       onClick={ this.redToFeedback }
                     >
-                      Feedback final
+                      Final Feedback
                     </button>))}
               </main>
             )
@@ -233,8 +225,7 @@ Game.propTypes = {
 }.isRequired;
 
 const mapStateToProps = (state) => {
-  const {
-    token,
+  const { token,
     player: { score },
     settings: { category, difficulty, type },
   } = state;
