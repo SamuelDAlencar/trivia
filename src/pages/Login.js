@@ -49,14 +49,6 @@ class Login extends Component {
     const { handleClick } = this.props;
     return (
       <div className="login">
-        <button
-          type="button"
-          data-testid="btn-settings"
-          onClick={ () => this.roteSettings() }
-          className="form__button settings"
-        >
-          Settings
-        </button>
         <form className="form">
           <img src={ logo } className="App-logo" alt="logo" />
           <label htmlFor="name" className="form__label">
@@ -79,15 +71,30 @@ class Login extends Component {
               className="form__label__input"
             />
           </label>
-          <button
-            type="button"
-            data-testid="btn-play"
-            disabled={ !name || !gravatarEmail }
-            onClick={ () => this.handleButton(handleClick) }
-            className="form__button"
-          >
-            Play!
-          </button>
+          <section className="buttons">
+            <button
+              type="button"
+              data-testid="btn-play"
+              disabled={
+                !name
+                || !gravatarEmail
+                || !gravatarEmail.includes('@')
+                || !gravatarEmail.includes('.com')
+              }
+              onClick={ () => this.handleButton(handleClick) }
+              className="form__button"
+            >
+              Play!
+            </button>
+            <button
+              type="button"
+              data-testid="btn-settings"
+              onClick={ () => this.roteSettings() }
+              className="form__button settings"
+            >
+              Settings
+            </button>
+          </section>
         </form>
       </div>
     );

@@ -80,6 +80,12 @@
   transition: background-color , 5000s ease-in-out 0s;
 }
 
+.buttons {
+  display: flex;
+  justify-content: space-around;
+  width: 50%;
+}
+
 .form__button {
   background-color: dodgerblue;
   border: none;
@@ -87,8 +93,16 @@
   color: white;
   cursor: pointer;
   font-size: 20px;
-  padding: 12px;
+  margin: 5%;
+  padding: 15px;
 }
+
+.form__button:disabled {
+  background-color: rgb(3, 85, 167);
+  color: rgb(150, 150, 150);
+  cursor: not-allowed;
+}
+
 
 .form__button:hover {
   background-color: rgb(3, 85, 167);
@@ -96,8 +110,12 @@
   transition: all 0.3s;
 }
 
+.form__button:disabled:hover {
+  background-color: red;
+}
+
 .settings {
-  margin: 30px;
+  margin: 5%;
 }
 
 .headerSettings {
