@@ -50,7 +50,7 @@
   cursor: pointer;
   font-size: 18px;
   margin: 5%;
-  padding: 10px;
+  padding: 15px;
 }
 
 .game-main__next-button:hover {
@@ -63,11 +63,13 @@
 .correct {
   background-color: rgb(6, 240, 15);
   border: 3px solid rgb(6, 240, 15);
+  color: black;
 }
 
 .wrong {
   background-color: red;
   border: 3px solid red;
+  color: black;
 }
 
 .footerTime {

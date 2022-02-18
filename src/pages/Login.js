@@ -53,7 +53,7 @@ class Login extends Component {
           type="button"
           data-testid="btn-settings"
           onClick={ () => this.roteSettings() }
-          className="form__button"
+          className="form__button settings"
         >
           Settings
         </button>

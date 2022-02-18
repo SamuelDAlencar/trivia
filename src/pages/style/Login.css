@@ -85,17 +85,19 @@
   border: none;
   border-radius: 5px;
   color: white;
+  cursor: pointer;
   font-size: 20px;
   padding: 12px;
 }
 
 .form__button:hover {
   background-color: rgb(3, 85, 167);
+  transform: scale(1.2);
   transition: all 0.3s;
 }
 
 .settings {
-  min-height: 100vh;
+  margin: 30px;
 }
 
 .headerSettings {
