@@ -2,3 +2,19 @@ body {
   background-image: linear-gradient(45deg, green, blue, purple, red);
   box-sizing: border-box;
 }
+
+::-webkit-scrollbar {
+  background-color: inherit;
+  color: dodgerblue;
+  width: 10px;
+}
+
+::-webkit-scrollbar-track {
+  background: inherit;
+  border-radius: 30px;
+}
+
+::-webkit-scrollbar-thumb {
+  background: rgb(0, 62, 124);
+  border-radius: 30px;
+}
