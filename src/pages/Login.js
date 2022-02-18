@@ -49,7 +49,7 @@ class Login extends Component {
     const { handleClick } = this.props;
     return (
       <div className="login">
-        <form className="form">
+        <form className="form" autocomplete="off">
           <img src={ logo } className="App-logo" alt="logo" />
           <label htmlFor="name" className="form__label">
             <input

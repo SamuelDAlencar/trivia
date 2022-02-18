@@ -1,6 +1,6 @@
 .settingsScreen {
   color: white;
-  min-height: 100vh;
+  height: 100vh;
 }
 
 .headerSettings {
@@ -13,6 +13,7 @@
   background-color: rgba(0, 0, 0, 0.7);
   border-radius: 10px;
   font-size: 3rem;
+  overflow: hidden;
   padding: 50px;
 }
 
@@ -27,7 +28,7 @@
 }
 
 .btn1:hover {
-  color: black;
+  color: aliceblue;
   transform: scale(1.2);
   transition: 0.3s;
 }
@@ -42,13 +43,17 @@
 }
 
 .btn2:hover {
-  color: black;
+  color: aliceblue;
   transform: scale(1.2);
   transition: 0.3s;
 }
 
 .btns {
-  margin-top: 100px;
+  margin-top: 80px;
+}
+
+.settings__label {
+  margin: 3%;
 }
 
 .select {
@@ -58,8 +63,13 @@
   cursor: pointer;
   font-size: 15px;
   font-weight: 500;
-  margin: 5%;
+  margin: 3%;
   padding: 10px;
+}
+
+.select option {
+  margin: 5px 0;
+  padding: 5px;
 }
 
 .select:hover {
@@ -68,3 +78,6 @@
   transition: 0.3s;
 }
 
+.select:focus {
+  border: 0;
+}

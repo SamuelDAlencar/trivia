@@ -15,10 +15,6 @@ class Settings extends Component {
     };
   }
 
-  componentDidMount() {
-    this.saveSettings();
-  }
-
   handleSelect = ({ target }) => {
     const { value, id } = target;
     this.setState({ [id]: value });
@@ -32,6 +28,7 @@ class Settings extends Component {
       `&difficulty=${difficulty}`,
       `&type=${type}`,
     );
+    window.alert('Settings Saved!');
   }
 
   homeButton = () => {
@@ -44,7 +41,7 @@ class Settings extends Component {
       <div data-testid="settings-title" className="settingsScreen">
         <h1 className="headerSettings">Settings</h1>
         <section className="container">
-          <label htmlFor="category">
+          <label htmlFor="category" className="settings__label">
             Questions Category:
             <select className="select" id="category" onChange={ this.handleSelect }>
               <option value="any">Any Category</option>
@@ -74,7 +71,7 @@ class Settings extends Component {
               <option value="32">Entertainment: Cartoon &amp; Animations</option>
             </select>
           </label>
-          <label htmlFor="difficulty">
+          <label htmlFor="difficulty" className="settings__label">
             Difficulty:
             <select className="select" id="difficulty" onChange={ this.handleSelect }>
               <option value="any">Any difficulty</option>
@@ -83,7 +80,7 @@ class Settings extends Component {
               <option value="hard">Hard</option>
             </select>
           </label>
-          <label htmlFor="type">
+          <label htmlFor="type" className="settings__label">
             Questions Type:
             <select className="select" id="type" onChange={ this.handleSelect }>
               <option value="any">Any type</option>
