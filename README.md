@@ -34,7 +34,7 @@ Projeto feito durante o módulo de front-end na Trybe 💚
       </td>
       <td align="center">
         <img style="width: 250px" src="https://ca.slack-edge.com/TMDDFEPFU-U02EDBBF18X-cd92e9ae2ac3-512" style="max-width: 100%"/>
-        <b><a href="https://github.com/SamuelDAlencar">Lucas Fernandes</a></b>
+        <b><a href="https://github.com/lucas578527">Lucas Fernandes</a></b>
       </td>
     </tr>
   </tbody>
