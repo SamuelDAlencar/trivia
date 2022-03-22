@@ -1,5 +1,6 @@
 # Trivia
-Projeto feito durante o módulo de front-end na Trybe 💚
+
+Jogo de Trivia feito em grupo durante o módulo de front-end na Trybe 💚
 
 # Habilidades aplicadas:
 
