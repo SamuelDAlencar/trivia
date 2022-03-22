@@ -2,11 +2,7 @@
 
 Jogo de Trivia feito em grupo durante o módulo de front-end na Trybe 💚
 
-<video src="
-
-https://user-images.githubusercontent.com/77287225/159563236-d9081d90-67e7-4e1f-bc72-5e251f62cb94.mp4
-
-"></video>
+<video src="https://user-images.githubusercontent.com/77287225/159563236-d9081d90-67e7-4e1f-bc72-5e251f62cb94.mp4"></video>
 
 # Habilidades aplicadas:
 
