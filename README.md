@@ -1,24 +1,24 @@
 # Trivia
 
-Jogo de Trivia feito em grupo durante o módulo de front-end na Trybe 💚
+Trivia game made in group during the front-end module at Trybe 💚
 
 <video src="https://user-images.githubusercontent.com/77287225/159563236-d9081d90-67e7-4e1f-bc72-5e251f62cb94.mp4"></video>
 
-# Habilidades aplicadas:
+# Skills put into practice 👨‍💻
 
-  - Criar um store Redux em aplicações React
+  * Create a Redux store in React aplications
 
-  - Criar reducers no Redux em aplicações React
+  * Create Redux reducers in React aplications
 
-  - Criar actions no Redux em aplicações React
+  * Create Redux actions in React aplications
 
-  - Criar dispatchers no Redux em aplicações React
+  * Create Redux dispatchers in React aplications
 
-  - Conectar Redux aos componentes React
+  * Connect Redux to React components
 
-  - Criar actions assíncronas na sua aplicação React que faz uso de Redux.
+  * Create asynchronous actions in a React aplications that uses Redux
 
-# O timasso 💚💚:
+# The squad 💚💚:
 
 <table>
   <tbody>
