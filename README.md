@@ -32,7 +32,7 @@ Trivia game made in group during the front-end module at Trybe 💚
         <b><a href="https://github.com/willianbatist">Willian Batista</a></b>
       </td>
       <td align="center">
-        <img style="width: 250px" src="[https://media-exp1.licdn.com/dms/image/C4E03AQE-H9YIQ0slTA/profile-displayphoto-shrink_800_800/0/1647962774162?e=1653523200&v=beta&t=XC0jytIGAlXCeiVJR-MXfcBNvuLPp4XOjl3Z9O0wVMc](https://media-exp1.licdn.com/dms/image/C4E03AQEJa0Wn24UWHA/profile-displayphoto-shrink_800_800/0/1648043326740?e=1660176000&v=beta&t=47ELoiwp0i_w7XGI1vYVWlX089AE9WowOzvDnhDbCuM)" style="max-width: 100%"/>
+        <img style="width: 250px" src="https://media-exp1.licdn.com/dms/image/C4E03AQEJa0Wn24UWHA/profile-displayphoto-shrink_800_800/0/1648043326740?e=1660176000&v=beta&t=47ELoiwp0i_w7XGI1vYVWlX089AE9WowOzvDnhDbCuM" style="max-width: 100%"/>
         <b><a style="text-align: center" href="https://github.com/SamuelDAlencar">Samuel de Alencar Rocha</a></b>
       </td>
       <td align="center">
