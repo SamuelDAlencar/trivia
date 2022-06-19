@@ -1,6 +1,6 @@
 # Trivia 🎰
 
-Trivia game made in group during the front-end module at Trybe 💚
+Trivia game with profile option, settings and scoreboard made with react and redux
 
 <video src="https://user-images.githubusercontent.com/77287225/159563236-d9081d90-67e7-4e1f-bc72-5e251f62cb94.mp4"></video>
 
