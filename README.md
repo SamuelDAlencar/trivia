@@ -1,10 +1,10 @@
-# Trivia
+# Trivia 🎰
 
 Trivia game made in group during the front-end module at Trybe 💚
 
 <video src="https://user-images.githubusercontent.com/77287225/159563236-d9081d90-67e7-4e1f-bc72-5e251f62cb94.mp4"></video>
 
-# Skills put into practice 👨‍💻
+# Skills put into practice ✍
 
   * Create a Redux store in React aplications
 
@@ -18,7 +18,7 @@ Trivia game made in group during the front-end module at Trybe 💚
 
   * Create asynchronous actions in a React aplications that uses Redux
 
-# The squad 💚💚:
+# The squad 🤝:
 
 <table>
   <tbody>
